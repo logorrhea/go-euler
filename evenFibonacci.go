@@ -15,9 +15,6 @@ func fib(total int, prev1 int, prev2 int) int {
 	if next <= 4000000 {
 		if next%2 == 0 {
 			total += next
-			fmt.Printf("Added %d\n", next)
-		} else {
-			fmt.Printf("Did not add %d\n", next)
 		}
 		return fib(total, prev2, next)
 	} else {
