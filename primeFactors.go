@@ -5,19 +5,46 @@ import (
 )
 
 func main() {
-
-	// Example on how to use slices
-	slice1 := []int{1, 2, 3}
-	slice2 := []int{4, 5, 6}
-	fmt.Println(append(slice1, slice2...))
-
-	// Real code begin!!
-	factors := []int{}
+	for {
+		var num int
+		fmt.Scanf("%d", &num)
+		fax := factors(num)
+		fmt.Println("Factors:", fax)
+		fmt.Println("Largest:", greatest(fax))
+	}
 }
 
-// This should be a recursive method for finding
-// the factors of a number. The endpoints of the function
-// should be the prime factors of the parent number
-func factors(parent int) {
+func factors(parent int) []int {
+	i := 1
+	found := false
 
+	// Loop 2..parent, check if i evenly divides parent
+	for !found {
+		i++
+		if parent%i == 0 {
+			found = true
+		}
+	}
+
+	// If i == parent, parent is prime, so return that
+	// Otherwise find more factors
+	if i == parent {
+		if i == 2 {
+			return make([]int, 0)
+		} else {
+			return []int{parent}
+		}
+	} else {
+		return append(factors(i), factors(parent/i)...)
+	}
+}
+
+func greatest(vals []int) int {
+	tmp := vals[0]
+	for i := 1; i < len(vals); i++ {
+		if vals[i] > tmp {
+			tmp = vals[i]
+		}
+	}
+	return tmp
 }
