@@ -30,39 +30,68 @@ func main() {
 	}
 
 	var x, y, z, largest, current int
-	seq := [5][2]int{}
+	seq := [4][2]int{}
 
 	// Across
 	for x = 0; x < 17; x++ {
 		for y = 0; y < 20; y++ {
-      for z = 0; z < 4; z++ {
-        seq[z] = {x + z, y}
-      }
-			// current = product((x, y))
+			for z = 0; z < 4; z++ {
+				seq[z] = [2]int{x + z, y}
+			}
+			current = prod(seq, &nums)
+			if current > largest {
+				largest = current
+			}
 		}
 	}
 
 	// Down
 	for x = 0; x < 20; x++ {
 		for y = 0; y < 17; y++ {
-
+			for z = 0; z < 4; z++ {
+				seq[z] = [2]int{x, y + z}
+			}
+			current = prod(seq, &nums)
+			if current > largest {
+				largest = current
+			}
 		}
 	}
 
 	// Diagonal /
 	for x = 0; x < 17; x++ {
 		for y = 3; y < 20; y++ {
-
+			for z = 0; z < 4; z++ {
+				seq[z] = [2]int{x + z, y - z}
+			}
+			current = prod(seq, &nums)
+			if current > largest {
+				largest = current
+			}
 		}
 	}
 
 	// Diagonal \
 	for x = 0; x < 17; x++ {
 		for y = 0; y < 17; y++ {
-
+			for z = 0; z < 4; z++ {
+				seq[z] = [2]int{x + z, y + z}
+			}
+			current = prod(seq, &nums)
+			if current > largest {
+				largest = current
+			}
 		}
 	}
 
-	fmt.Println(nums[10][10])
+	fmt.Println("Largest:", largest)
 
+}
+
+func prod(arr [4][2]int, nums *[20][20]int) int {
+	prod := 1
+	for _, coords := range arr {
+		prod *= nums[coords[0]][coords[1]]
+	}
+	return prod
 }
